@@ -17,7 +17,7 @@ fn main() {
 
     if args.len() < 2 {
         println!("error: please provide a number as argument");
-        return;
+        return
     }
 
     let steps: int = from_str(args[1].as_slice()).unwrap();
