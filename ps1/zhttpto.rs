@@ -18,19 +18,10 @@ use std::str;
 
 
 fn extract_uri(request: &str) -> &str {
-    let mut spaces: Vec<uint> = Vec::with_capacity(2);
-
-    for (i, c) in request.chars().enumerate() {
-        if c == ' ' {
-            spaces.push(i)
-        }
-
-        if spaces.len() == 2 {
-            return request.slice(spaces[0] + 2, spaces[1]);
-        }
+    match request.splitn(2, ' ').nth(1) {
+        Some(r) => r.slice_from(1),  // Strips the trailing '/'
+        None => fail!("Bad request!"),
     }
-
-    fail!("Bad request!");
 }
 
 fn respond(mut stream: TcpStream, code: int, body: &str) {
